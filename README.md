@@ -2,8 +2,9 @@
 
 ## TODOS
 
-[] Project Setup
-[] Setup Amplify UI Library
+[x] Project Setup
+[x] Setup Amplify UI Library
+[] Setup Routing
 [] Build the UI
 [] Implement functionality
 [] Deploy to AWS
