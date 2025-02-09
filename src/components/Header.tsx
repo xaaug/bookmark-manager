@@ -1,4 +1,11 @@
 import { Link } from "react-router-dom";
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  UserButton,
+} from "@clerk/clerk-react";
+import { Flex } from "@aws-amplify/ui-react";
 
 const Header = () => {
   return (
@@ -7,7 +14,15 @@ const Header = () => {
         <Link to="/" className="text-2xl font-semibold">
           Manager
         </Link>
-        <Link to="bookmarks">Bookmarks</Link>
+        <SignedOut>
+          <SignInButton />
+        </SignedOut>
+        <SignedIn>
+          <Flex gap='small'> 
+          <Link to="bookmarks">Bookmarks</Link>
+          <UserButton />
+          </Flex>
+        </SignedIn>
       </nav>
     </header>
   );

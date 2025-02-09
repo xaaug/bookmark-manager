@@ -24,7 +24,7 @@ A simple tool to save, organize, and access your favorite links easily. It helps
 [x] Implement functionality
 [] Setup the database
 [] Connect database to frontend
-[] Add Authentication
+[x] Add Authentication
 [] Add cool animations
 [] Save and organize bookmarks with custom tags
 [] Quick search and filtering for easy access
