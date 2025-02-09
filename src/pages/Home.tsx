@@ -3,26 +3,34 @@ import { useState } from "react";
 import { Button, Flex, Text } from "@aws-amplify/ui-react";
 import InputField from "../components/InputField";
 import BookmarkCard from "../components/BookmarkCard";
-import * as motion from 'motion/react-client'
+import * as motion from "motion/react-client";
 
-import { useQuery, useMutation, Unauthenticated, Authenticated } from "convex/react";
+import {
+  useQuery,
+  useMutation,
+  Unauthenticated,
+  Authenticated,
+} from "convex/react";
 import { api } from "../../convex/_generated/api";
 import { SignInButton, useUser } from "@clerk/clerk-react";
 
 const Home = () => {
   return (
     <main>
-      <Unauthenticated >
-       <div className="my-12">
-        <Button variation="primary" loadingText="" color="white"> <SignInButton /></Button>
-       </div>
+      <Unauthenticated>
+        <div className="my-12">
+          <Button variation="primary" loadingText="" color="white">
+            {" "}
+            <SignInButton />
+          </Button>
+        </div>
       </Unauthenticated>
       <Authenticated>
         <Content />
       </Authenticated>
     </main>
-  )
-}
+  );
+};
 
 export const Content = () => {
   const [titleValue, setTitleValue] = useState<string>("");
@@ -44,7 +52,7 @@ export const Content = () => {
   //   // localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
   // }, [bookmarks]);
 
-  const {user} = useUser()
+  const { user } = useUser();
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitleValue(event.target.value);
     if (titleValue.trim().length < 2) {
@@ -136,16 +144,20 @@ export const Content = () => {
               https://google.com
             </Text>
           )}
-         <motion.div whileHover={{scale: 1.005}} whileTap={{scale: 1}} style={{width: '100%'}}>
-         <Button
-            variation="primary"
-            type="submit"
-            onClick={(e) => handleSubmit(e)}
-            width='100%'
+          <motion.div
+            whileHover={{ scale: 1.005 }}
+            whileTap={{ scale: 1 }}
+            style={{ width: "100%" }}
           >
-            Add Bookmark
-          </Button>
-         </motion.div>
+            <Button
+              variation="primary"
+              type="submit"
+              onClick={(e) => handleSubmit(e)}
+              width="100%"
+            >
+              Add Bookmark
+            </Button>
+          </motion.div>
         </Flex>
       </div>
 
