@@ -22,8 +22,8 @@ A simple tool to save, organize, and access your favorite links easily. It helps
 [x] Build the UI
 [x] Deploy to AWS
 [x] Implement functionality
-[] Setup the database
-[] Connect database to frontend
+[x] Setup the database
+[x] Connect database to frontend
 [x] Add Authentication
 [] Add cool animations
 [] Save and organize bookmarks with custom tags

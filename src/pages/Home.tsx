@@ -1,29 +1,34 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { Button, Flex, Text } from "@aws-amplify/ui-react";
 import InputField from "../components/InputField";
 import BookmarkCard from "../components/BookmarkCard";
 
-type Bookmark = {
-  title: string;
-  url: string;
-};
+import { useQuery, useMutation } from "convex/react";
+import {api} from '../../convex/_generated/api'
 
-const Home = () => {
+const Home =  () => {
+
   const [titleValue, setTitleValue] = useState<string>("");
   const [urlValue, setUrlValue] = useState<string>("");
 
   const [urlError, setUrlError] = useState<boolean>(false);
   const [titleError, setTitleError] = useState<boolean>(false);
 
-  const [bookmarks, setBookmarks] = useState<Bookmark[]>(() => {
-    const savedBookMarks = localStorage.getItem("bookmarks");
-    return savedBookMarks ? JSON.parse(savedBookMarks) : [];
-  });
+  const bookmarks = useQuery(api.bookmarks.get)
+  const addBookmark = useMutation(api.bookmarks.addBookmark)
 
-  useEffect(() => {
-    localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
-  }, [bookmarks]);
+  // const [bookmarks, setBookmarks] = useState<Bookmark[]>([]);
+  // const [bookmarks, setBookmarks] = useState<Bookmark[]>(() => {
+  //   const savedBookMarks = localStorage.getItem("bookmarks");
+  //   return savedBookMarks ? JSON.parse(savedBookMarks) : [];
+  // });
+
+
+
+  // useEffect(() => {
+  //   // localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+  // }, [bookmarks]);
 
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitleValue(event.target.value);
@@ -42,7 +47,6 @@ const Home = () => {
         new URL(url);
         return true;
       } catch (error) {
-        console.error(error);
         return false;
       }
     };
@@ -54,7 +58,7 @@ const Home = () => {
     }
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLButtonElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
     if (titleValue.trim().length < 2) {
@@ -68,17 +72,20 @@ const Home = () => {
     setTitleError(false);
     setUrlError(false);
 
-    setBookmarks((prev) =>
-      bookmarks.length > 0
-        ? [{ title: titleValue, url: urlValue }, ...prev]
-        : [{ title: titleValue, url: urlValue }],
-    );
+    // setBookmarks((prev) =>
+    //   bookmarks.length > 0
+    //     ? [{ title: titleValue, url: urlValue }, ...prev]
+    //     : [{ title: titleValue, url: urlValue }],
+    // );
+
+    await addBookmark({title: titleValue, url: urlValue})
 
     setTitleValue("");
     setUrlValue("");
   };
 
-  const recentBookmarks = bookmarks.slice(0, 6);
+
+  const recentBookmarks = bookmarks?.slice().reverse()?.slice(0, 5);
 
   return (
     <>
@@ -125,14 +132,16 @@ const Home = () => {
 
       <div>
         <h3 className="text-xl font-semibold my-6">Recent Bookmarks</h3>
+        {!bookmarks && typeof bookmarks !== 'undefined' ? <Text variation="info">No Recent Bookmarks</Text> : null}
         <Flex direction="column">
-          {bookmarks.length > 0 ? (
-            recentBookmarks.map((bookmark, i) => (
-              <BookmarkCard key={i} bookmark={bookmark} />
-            ))
-          ) : (
-            <Text variation="info">No Recent Bookmarks</Text>
-          )}
+           {typeof recentBookmarks !== 'undefined'  && recentBookmarks?.length > 0  ?
+              (
+              recentBookmarks.map((bookmark, i) => (
+                <BookmarkCard key={i} bookmark={bookmark} />
+              ))
+            ) : (
+              <Text variation="info">Loading....</Text>
+            )}
         </Flex>
       </div>
     </>
