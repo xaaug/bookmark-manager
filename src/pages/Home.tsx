@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Button, Flex, Text } from "@aws-amplify/ui-react";
 import InputField from "../components/InputField";
@@ -16,28 +16,14 @@ const Home = () => {
   const [urlError, setUrlError] = useState<boolean>(false);
   const [titleError, setTitleError] = useState<boolean>(false);
 
-  const [bookmarks, setBookmarks] = useState<Bookmark[]>([
-    {
-      title: "CSS Font Pairings Guide",
-      url: "https://www.canva.com/learn/the-ultimate-guide-to-font-pairing/",
-    },
-    {
-      title: "Google Fonts Pairing Tool",
-      url: "https://fonts.google.com/knowledge/pairing",
-    },
-    {
-      title: "Font Pair – Free Typography Combos",
-      url: "https://www.fontpair.co/",
-    },
-    {
-      title: "Best Google Font Combinations",
-      url: "https://www.creativebloq.com/inspiration/20-perfect-pairings-of-google-fonts",
-    },
-    {
-      title: "A Guide to Font Pairing",
-      url: "https://www.smashingmagazine.com/2010/11/best-practices-of-combining-typefaces/",
-    },
-  ]);
+  const [bookmarks, setBookmarks] = useState<Bookmark[]>(() => {
+    const savedBookMarks = localStorage.getItem("bookmarks");
+    return savedBookMarks ? JSON.parse(savedBookMarks) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+  }, [bookmarks]);
 
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitleValue(event.target.value);
@@ -82,11 +68,17 @@ const Home = () => {
     setTitleError(false);
     setUrlError(false);
 
-    setBookmarks((prev) => [{ title: titleValue, url: urlValue }, ...prev]);
+    setBookmarks((prev) =>
+      bookmarks.length > 0
+        ? [{ title: titleValue, url: urlValue }, ...prev]
+        : [{ title: titleValue, url: urlValue }],
+    );
 
     setTitleValue("");
     setUrlValue("");
   };
+
+  const recentBookmarks = bookmarks.slice(0, 6);
 
   return (
     <>
@@ -135,7 +127,7 @@ const Home = () => {
         <h3 className="text-xl font-semibold my-6">Recent Bookmarks</h3>
         <Flex direction="column">
           {bookmarks.length > 0 ? (
-            bookmarks.map((bookmark, i) => (
+            recentBookmarks.map((bookmark, i) => (
               <BookmarkCard key={i} bookmark={bookmark} />
             ))
           ) : (
