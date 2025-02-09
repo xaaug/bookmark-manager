@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Button, Flex, Text } from "@aws-amplify/ui-react";
 import InputField from "../components/InputField";
 import BookmarkCard from "../components/BookmarkCard";
+import * as motion from 'motion/react-client'
 
 import { useQuery, useMutation } from "convex/react";
 import { api } from "../../convex/_generated/api";
@@ -117,13 +118,16 @@ const Home = () => {
               https://google.com
             </Text>
           )}
-          <Button
+         <motion.div whileHover={{scale: 1.005}} whileTap={{scale: 1}} style={{width: '100%'}}>
+         <Button
             variation="primary"
             type="submit"
             onClick={(e) => handleSubmit(e)}
+            width='100%'
           >
             Add Bookmark
           </Button>
+         </motion.div>
         </Flex>
       </div>
 
