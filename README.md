@@ -28,5 +28,6 @@ A simple tool to save, organize, and access your favorite links easily. It helps
 [] Add cool animations
 [] Save and organize bookmarks with custom tags
 [] Quick search and filtering for easy access
+[x] Delete functionality
 [] Dark mode for better usability
 [] Make it responsive

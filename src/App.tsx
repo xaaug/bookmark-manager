@@ -5,11 +5,10 @@ import Layout from "./components/Layout";
 import Bookmarks from "./pages/Bookmarks";
 import NotFound from "./pages/NotFound";
 
-
 const App = () => {
   return (
     <BrowserRouter>
-     <Routes>
+      <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="bookmarks" element={<Bookmarks />} />

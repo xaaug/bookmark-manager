@@ -7,5 +7,3 @@ export default defineSchema({
     url: v.string(),
   }),
 });
-
-

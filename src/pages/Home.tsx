@@ -5,26 +5,23 @@ import InputField from "../components/InputField";
 import BookmarkCard from "../components/BookmarkCard";
 
 import { useQuery, useMutation } from "convex/react";
-import {api} from '../../convex/_generated/api'
+import { api } from "../../convex/_generated/api";
 
-const Home =  () => {
-
+const Home = () => {
   const [titleValue, setTitleValue] = useState<string>("");
   const [urlValue, setUrlValue] = useState<string>("");
 
   const [urlError, setUrlError] = useState<boolean>(false);
   const [titleError, setTitleError] = useState<boolean>(false);
 
-  const bookmarks = useQuery(api.bookmarks.get)
-  const addBookmark = useMutation(api.bookmarks.addBookmark)
+  const bookmarks = useQuery(api.bookmarks.get);
+  const addBookmark = useMutation(api.bookmarks.addBookmark);
 
   // const [bookmarks, setBookmarks] = useState<Bookmark[]>([]);
   // const [bookmarks, setBookmarks] = useState<Bookmark[]>(() => {
   //   const savedBookMarks = localStorage.getItem("bookmarks");
   //   return savedBookMarks ? JSON.parse(savedBookMarks) : [];
   // });
-
-
 
   // useEffect(() => {
   //   // localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
@@ -46,6 +43,7 @@ const Home =  () => {
       try {
         new URL(url);
         return true;
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (error) {
         return false;
       }
@@ -78,12 +76,11 @@ const Home =  () => {
     //     : [{ title: titleValue, url: urlValue }],
     // );
 
-    await addBookmark({title: titleValue, url: urlValue})
+    await addBookmark({ title: titleValue, url: urlValue });
 
     setTitleValue("");
     setUrlValue("");
   };
-
 
   const recentBookmarks = bookmarks?.slice().reverse()?.slice(0, 5);
 
@@ -132,16 +129,17 @@ const Home =  () => {
 
       <div>
         <h3 className="text-xl font-semibold my-6">Recent Bookmarks</h3>
-        {!bookmarks && typeof bookmarks !== 'undefined' ? <Text variation="info">No Recent Bookmarks</Text> : null}
+
         <Flex direction="column">
-           {typeof recentBookmarks !== 'undefined'  && recentBookmarks?.length > 0  ?
-              (
-              recentBookmarks.map((bookmark, i) => (
-                <BookmarkCard key={i} bookmark={bookmark} />
-              ))
-            ) : (
-              <Text variation="info">Loading....</Text>
-            )}
+          {!recentBookmarks ? (
+            <Text variation="info">Loading...</Text>
+          ) : recentBookmarks.length === 0 ? (
+            <Text variation="info">No Recent Bookmarks</Text>
+          ) : (
+            recentBookmarks.map((bookmark) => (
+              <BookmarkCard key={bookmark._id} bookmark={bookmark} />
+            ))
+          )}
         </Flex>
       </div>
     </>

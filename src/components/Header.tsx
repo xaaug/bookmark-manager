@@ -18,9 +18,9 @@ const Header = () => {
           <SignInButton />
         </SignedOut>
         <SignedIn>
-          <Flex gap='small'> 
-          <Link to="bookmarks">Bookmarks</Link>
-          <UserButton />
+          <Flex gap="small">
+            <Link to="bookmarks">Bookmarks</Link>
+            <UserButton />
           </Flex>
         </SignedIn>
       </nav>

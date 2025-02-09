@@ -9,16 +9,21 @@ export const get = query({
 });
 
 export const addBookmark = mutation({
-    args: {
-      title: v.string(),
-      url: v.string(),
-    },
-    handler: async (ctx, args) => {
-      console.log("This TypeScript function is running on the server.");
-      await ctx.db.insert("bookmarks", {
-        title: args.title,
-        url: args.url,
-      });
-      console.log('Product Added')
-    },
-  });
+  args: {
+    title: v.string(),
+    url: v.string(),
+  },
+  handler: async (ctx, args) => {
+    await ctx.db.insert("bookmarks", {
+      title: args.title,
+      url: args.url,
+    });
+  },
+});
+
+export const deleteBookmark = mutation({
+  args: { id: v.id("bookmarks") },
+  handler: async (ctx, { id }) => {
+    await ctx.db.delete(id);
+  },
+});
