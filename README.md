@@ -1,5 +1,19 @@
 # Bookmark Manager
 
+A simple tool to save, organize, and access your favorite links easily. It helps in managing bookmarks.
+
+## 🚀 Features
+
+- ✅ Save and organize bookmarks
+
+## Tech
+
+- React
+- Typescript
+- Amplify UI Library
+- Tailwind CSS
+- Amplify
+
 ## TODOS
 
 [x] Project Setup
@@ -12,4 +26,7 @@
 [] Connect database to frontend
 [] Add Authentication
 [] Add cool animations
+[] Save and organize bookmarks with custom tags
+[] Quick search and filtering for easy access
+[] Dark mode for better usability
 [] Make it responsive
