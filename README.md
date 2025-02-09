@@ -12,7 +12,9 @@ A simple tool to save, organize, and access your favorite links easily. It helps
 - Typescript
 - Amplify UI Library
 - Tailwind CSS
-- Amplify
+- Convex - Database
+- Amplify - Deployment
+- Clerk - Authentication
 
 ## TODOS
 
@@ -25,9 +27,9 @@ A simple tool to save, organize, and access your favorite links easily. It helps
 [x] Setup the database
 [x] Connect database to frontend
 [x] Add Authentication
-[] Add cool animations
-[] Save and organize bookmarks with custom tags
+[] Add some animations
+[x] Save bookmarks
 [] Quick search and filtering for easy access
 [x] Delete functionality
 [] Dark mode for better usability
-[] Make it responsive
+[x] Make it responsive
