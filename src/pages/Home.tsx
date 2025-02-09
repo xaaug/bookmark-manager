@@ -4,10 +4,26 @@ import { Button, Flex, Text } from "@aws-amplify/ui-react";
 import InputField from "../components/InputField";
 import BookmarkCard from "../components/BookmarkCard";
 
-import { useQuery, useMutation } from "convex/react";
+import { useQuery, useMutation, Unauthenticated, Authenticated } from "convex/react";
 import { api } from "../../convex/_generated/api";
+import { SignInButton, useUser } from "@clerk/clerk-react";
 
 const Home = () => {
+  return (
+    <main>
+      <Unauthenticated >
+       <div className="my-12">
+        <Button variation="primary" loadingText="" color="white"> <SignInButton /></Button>
+       </div>
+      </Unauthenticated>
+      <Authenticated>
+        <Content />
+      </Authenticated>
+    </main>
+  )
+}
+
+export const Content = () => {
   const [titleValue, setTitleValue] = useState<string>("");
   const [urlValue, setUrlValue] = useState<string>("");
 
@@ -27,6 +43,7 @@ const Home = () => {
   //   // localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
   // }, [bookmarks]);
 
+  const {user} = useUser()
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitleValue(event.target.value);
     if (titleValue.trim().length < 2) {
@@ -87,6 +104,7 @@ const Home = () => {
   return (
     <>
       <div>
+        <h3 className="text-2xl font-bold mt-5">Hello, {user?.username} 👋</h3>
         <h3 className="text-xl font-semibold my-6">New Bookmark</h3>
         <Flex direction="column" gap="small" as="form">
           <InputField
